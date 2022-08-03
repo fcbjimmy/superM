@@ -7,6 +7,8 @@ import Products from "./Products.js";
 import ProductDetails from "./ProductDetails.js";
 import Cart from "./Cart.js";
 
+console.log("testing");
+
 function App() {
   const [cart, setCart] = useState(function () {
     let savedCart = [];
