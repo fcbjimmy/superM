@@ -7,8 +7,6 @@ import Products from "./Products.js";
 import ProductDetails from "./ProductDetails.js";
 import Cart from "./Cart.js";
 
-console.log("testing");
-
 function App() {
   const [cart, setCart] = useState(function () {
     let savedCart = [];
@@ -29,6 +27,7 @@ function App() {
   function handleProductDelete(id) {
     const updatedCart = cart.filter((product) => product.id !== id);
     setCart(updatedCart);
+    console.log(id);
   }
 
   function handleProductAdd(newProduct) {
