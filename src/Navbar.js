@@ -10,6 +10,8 @@ export default function Navbar(props) {
   //   0
   // );
 
+  let activeClassName = "active";
+
   return (
     <nav className="navbar">
       <NavLink to="/" className="nav-brand">
@@ -17,17 +19,32 @@ export default function Navbar(props) {
       </NavLink>
       <ul>
         <li className="nav-item">
-          <NavLink exact activeClassName="active" to="/">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+            to="/"
+          >
             Home
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink exact activeClassName="active" to="/about">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+            to="/about"
+          >
             About us
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" to="/products">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? activeClassName : undefined
+            }
+            to="/products"
+          >
             Products
           </NavLink>
         </li>
