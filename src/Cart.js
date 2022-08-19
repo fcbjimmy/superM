@@ -2,15 +2,15 @@ import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Input from "./Input.js";
 import Button from "./Button.js";
+import { useSelector } from "react-redux";
+import { cartValue } from "./store";
 
 // TODO: Replace with your own publishable key
 const stripeLoadedPromise = loadStripe("PK_REPLACE_WITH_YOUR_PUBLISHABLE_KEY");
 
 export default function Cart({ cart }) {
-  const totalPrice = cart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
+  const totalPrice = useSelector(cartValue);
+  console.log(totalPrice);
 
   const [email, setEmail] = useState("");
 
@@ -95,11 +95,6 @@ export default function Cart({ cart }) {
               <p>
                 Enter your email and then click on pay and your products will be
                 delivered to you on the same day!
-                <br />
-                <em>
-                  Enter your own Stripe Publishable Key in Cart.js for the
-                  checkout to work
-                </em>
               </p>
               <Input
                 placeholder="Email"

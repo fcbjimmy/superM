@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  NavLink,
-  Switch,
-  Route,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { NavLink, Routes, Route, useParams } from "react-router-dom";
 import useFetch from "./useFetch.js";
 import ProductDetailInfo from "./ProductDetailInfo.js";
 import ProductDetailNutrition from "./ProductDetailNutrition.js";
@@ -15,8 +9,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState({});
   const { get } = useFetch("https://react-tutorial-demo.firebaseio.com/");
   const params = useParams();
-  const match = useRouteMatch();
-
+  console.log(params);
   useEffect(() => {
     get(`productinfo/id${params.id}.json`)
       .then((data) => {
@@ -24,6 +17,8 @@ export default function ProductDetails() {
       })
       .catch((error) => console.log("Could not load product details", error));
   }, []);
+
+  let activeclassname = "tab-active";
 
   return (
     <div className="product-details-layout">
@@ -41,43 +36,48 @@ export default function ProductDetails() {
         <div className="tabs">
           <ul>
             <li>
-              <NavLink exact activeClassName="tab-active" to={match.url}>
+              <NavLink
+                to={`/products/${params.id}/`}
+                className={({ isActive }) =>
+                  isActive ? activeclassname : undefined
+                }
+              >
                 Details
               </NavLink>
             </li>
             <li>
               <NavLink
-                exact
-                activeClassName="tab-active"
-                to={match.url + "/nutrition"}
+                to={`/products/${params.id}/nutrition`}
+                className={({ isActive }) =>
+                  isActive ? activeclassname : undefined
+                }
               >
                 Nutrition
               </NavLink>
             </li>
             <li>
               <NavLink
-                exact
-                activeClassName="tab-active"
-                to={match.url + "/storage"}
+                to={`/products/${params.id}/storage`}
+                className={({ isActive }) =>
+                  isActive ? activeclassname : undefined
+                }
               >
                 Storage
               </NavLink>
             </li>
           </ul>
         </div>
-        <Switch>
-          <Route exact path={match.path}>
-            <ProductDetailInfo product={product} />
-          </Route>
-
-          <Route path={match.path + "/nutrition"}>
-            <ProductDetailNutrition nutrition={product.nutrition} />
-          </Route>
-
-          <Route path={match.path + "/storage"}>
-            <ProductDetailStorage storage={product.storage} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<ProductDetailInfo product={product} />} />
+          <Route
+            path="/nutrition"
+            element={<ProductDetailNutrition nutrition={product.nutrition} />}
+          />
+          <Route
+            path="/storage"
+            element={<ProductDetailStorage storage={product.storage} />}
+          />
+        </Routes>
       </div>
     </div>
   );
