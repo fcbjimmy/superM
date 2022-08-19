@@ -8,7 +8,6 @@ export default function Product(props) {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const productFromCart = cart.find((product) => product.id === details.id);
-
   const quantity = productFromCart ? productFromCart.quantity : 0;
 
   return (
